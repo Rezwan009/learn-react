@@ -2,13 +2,15 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 function Header() {
   return (
-    <header>
-      <img src="react1.png" width="40px" alt="React logo" />
+    <header className="header">
+      <div className="logo">
+        <img src="react1.png" width="40px" height="40px" alt="React logo" />
+      </div>
       <nav>
-        <ul>
-          <li>Pricing</li>
-          <li>About</li>
-          <li>Contact</li>
+        <ul className="nav-list">
+          <li className="nav-list-item">Pricing</li>
+          <li className="nav-list-item">About</li>
+          <li className="nav-list-item">Contact</li>
         </ul>
       </nav>
     </header>
