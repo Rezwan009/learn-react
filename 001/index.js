@@ -1,10 +1,10 @@
-const root = ReactDOM.createRoot(document.getElementById("root"));
 
+const root = ReactDOM.createRoot(document.getElementById("root"));
 function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src="react1.png" width="40px" height="40px" alt="React logo" />
+        <img src="react1.png" alt="React logo" />
       </div>
       <nav>
         <ul className="nav-list">
@@ -16,7 +16,6 @@ function Header() {
     </header>
   );
 }
-
 function MainContent() {
   return (
     <main>
@@ -36,8 +35,8 @@ function MainContent() {
 
 function Footer() {
   return (
-    <footer>
-      <small>© 2024 Ziroll development. All rights reserved.</small>
+    <footer className="footer">
+      <small>© 2026 devRezo development. All rights reserved.</small>
     </footer>
   );
 }
