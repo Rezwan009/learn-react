@@ -5,12 +5,14 @@ import SocialLink from "./components/SocialLink";
 
 function App() {
   return (
-    <>
-      <PersonalInfo />
-      <About />
-      <Interests />
-      <SocialLink />
-    </>
+    <div className="container">
+      <div className="personal">
+        <PersonalInfo />
+        <About />
+        <Interests />
+        <SocialLink />
+      </div>
+    </div>
   );
 }
 
