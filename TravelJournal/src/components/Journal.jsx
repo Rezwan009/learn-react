@@ -28,7 +28,9 @@ const Journal = ({
 
         <p>{description}</p>
 
-        <a href={googleMapsUrl}>Google Maps</a>
+        <a href={googleMapsUrl} target="_blank" rel="noreferrer">
+          Google Maps
+        </a>
       </div>
     </article>
   );
