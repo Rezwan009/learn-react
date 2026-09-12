@@ -7,13 +7,14 @@ const Journals = () => {
         return (
           <Journal
             key={item.id}
-            location={item.location}
-            title={item.title}
-            startDate={item.startDate}
-            endDate={item.endDate}
-            description={item.description}
-            googleMapsUrl={item.googleMapsUrl}
-            imageUrl={item.imageUrl}
+            {...item}
+            // location={item.location}
+            // title={item.title}
+            // startDate={item.startDate}
+            // endDate={item.endDate}
+            // description={item.description}
+            // googleMapsUrl={item.googleMapsUrl}
+            // imageUrl={item.imageUrl}
           />
         );
       })}
