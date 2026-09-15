@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import Footer from "./components/Footer";
-import WindowTracker from "./components/WindowTracker";
+// import WindowTracker from "./components/WindowTracker";
 function App() {
   const [meme, setMeme] = useState({
     topText: "One does not simply",
     bottomText: "Walk into Mordor",
     imageUrl: "http://i.imgflip.com/1bij.jpg",
   });
-  const [show, setShow] = useState(true);
 
-  function toggle() {
-    setShow((prevShow) => !prevShow);
-  }
   const [allMemes, setAllMemes] = useState([]);
 
-  const [data, setData] = useState({});
-  const [count, setCount] = useState(1);
-  useEffect(() => {
-    fetch(`https://swapi.dev/api/people/${count}`)
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, [count]);
+  // const [data, setData] = useState({});
+  // const [count, setCount] = useState(1);
+  // useEffect(() => {
+  //   fetch(`https://swapi.dev/api/people/${count}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data));
+  // }, [count]);
 
+  // const [show, setShow] = useState(true);
+
+  // function toggle() {
+  //   setShow((prevShow) => !prevShow);
+  // }
   function handleChange(event) {
     const { value, name } = event.currentTarget;
     setMeme((prev) => ({
@@ -31,27 +32,36 @@ function App() {
     }));
   }
 
-  // useEffect(() => {
-  //   fetch(`https://api.imgflip.com/get_memes`)
-  //     .then((res) => res.json())
-  //     .then((data) => setAllMemes(data.data.memes));
-  // }, []);
+  useEffect(() => {
+    fetch(`https://api.imgflip.com/get_memes`)
+      .then((res) => res.json())
+      .then((data) => setAllMemes(data.data.memes));
+  }, []);
+
+  function getMemeImage() {
+    // get a random number from 0 to array.length
+    const randomNumber = Math.floor(Math.random() * allMemes.length);
+
+    const newMemeUrl = allMemes[randomNumber].url;
+    setMeme((prev) => ({ ...prev, imageUrl: newMemeUrl }));
+  }
 
   return (
     <>
       <Header />
       <main>
-        <div>
+        {/* <div>
           <button onClick={toggle}>Toggle WindowTracker</button>
           {show && <WindowTracker />}
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <h2>The count is {count}</h2>
           <button onClick={() => setCount((prevCount) => prevCount + 1)}>
             Get next character
           </button>
           <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
+        </div> */}
+
         <div className="form">
           <label>
             Top Text
@@ -74,7 +84,7 @@ function App() {
               value={meme.bottomText}
             />
           </label>
-          <button>Get a new meme image 🖼</button>
+          <button onClick={getMemeImage}>Get a new meme image 🖼</button>
         </div>
         <div className="meme">
           <img src={meme.imageUrl} />
