@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -9,6 +9,8 @@ function App() {
     imageUrl: "http://i.imgflip.com/1bij.jpg",
   });
 
+  const [data, setData] = useState(null);
+
   function handleChange(event) {
     const { value, name } = event.currentTarget;
     setMeme((prev) => ({
@@ -17,10 +19,17 @@ function App() {
     }));
   }
 
+  useEffect(() => {
+    fetch(`https://swapi.dev/api/people/1`)
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, []);
+
   return (
     <>
       <Header />
       <main>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
         <div className="form">
           <label>
             Top Text
