@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import Footer from "./components/Footer";
-
+import WindowTracker from "./components/WindowTracker";
 function App() {
   const [meme, setMeme] = useState({
     topText: "One does not simply",
     bottomText: "Walk into Mordor",
     imageUrl: "http://i.imgflip.com/1bij.jpg",
   });
+  const [show, setShow] = useState(true);
 
+  function toggle() {
+    setShow((prevShow) => !prevShow);
+  }
   const [allMemes, setAllMemes] = useState([]);
 
-  // const [data, setData] = useState({});
-  // const [count, setCount] = useState(1);
-  // useEffect(() => {
-  //   fetch(`https://swapi.dev/api/people/${count}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data));
-  // }, [count]);
+  const [data, setData] = useState({});
+  const [count, setCount] = useState(1);
+  useEffect(() => {
+    fetch(`https://swapi.dev/api/people/${count}`)
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, [count]);
 
   function handleChange(event) {
     const { value, name } = event.currentTarget;
@@ -27,22 +31,26 @@ function App() {
     }));
   }
 
-  useEffect(() => {
-    fetch(`https://api.imgflip.com/get_memes`)
-      .then((res) => res.json())
-      .then((data) => setAllMemes(data.data.memes));
-  }, []);
+  // useEffect(() => {
+  //   fetch(`https://api.imgflip.com/get_memes`)
+  //     .then((res) => res.json())
+  //     .then((data) => setAllMemes(data.data.memes));
+  // }, []);
 
   return (
     <>
       <Header />
       <main>
         <div>
-          {/* <h2>The count is {count}</h2>
+          <button onClick={toggle}>Toggle WindowTracker</button>
+          {show && <WindowTracker />}
+        </div>
+        <div>
+          <h2>The count is {count}</h2>
           <button onClick={() => setCount((prevCount) => prevCount + 1)}>
             Get next character
-          </button> */}
-          <pre>{JSON.stringify(allMemes, null, 2)}</pre>
+          </button>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
         <div className="form">
           <label>
