@@ -9,8 +9,8 @@ function App() {
     imageUrl: "http://i.imgflip.com/1bij.jpg",
   });
 
-  const [data, setData] = useState(null);
-
+  const [data, setData] = useState({});
+  const [count, setCount] = useState(1);
   function handleChange(event) {
     const { value, name } = event.currentTarget;
     setMeme((prev) => ({
@@ -20,16 +20,22 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(`https://swapi.dev/api/people/1`)
+    fetch(`https://swapi.dev/api/people/${count}`)
       .then((res) => res.json())
       .then((data) => setData(data));
-  }, []);
+  }, [count]);
 
   return (
     <>
       <Header />
       <main>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        <div>
+          <h2>The count is {count}</h2>
+          <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+            Get next character
+          </button>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
         <div className="form">
           <label>
             Top Text
