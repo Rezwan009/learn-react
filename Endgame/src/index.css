@@ -21,7 +21,7 @@ header > h1 {
 }
 header > p {
   font-size: 0.875rem;
-  max-width: 350px;
+  max-width: 450px;
   color: #8e8e8e;
 }
 section.game-status {
@@ -37,6 +37,7 @@ section.game-status {
 
 section.game-status > p {
     margin: 5px;
+    
 }
 
 section.game-status > h2 {
