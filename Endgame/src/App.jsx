@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GameStatus from "./components/GameStatus";
 import { Header } from "./components/Header";
 import LanguageChips from "./components/LanguageChips";
 import { Word } from "./components/Word";
 import Keyboard from "./components/Keyboard";
 import { languages } from "./constant/languages";
-
+import { getRandomWord } from "./lib/utils";
+import Confetti from "react-confetti";
 function App() {
-  const [currentWord, setCurrentWord] = useState("react");
+  const [currentWord, setCurrentWord] = useState(() => getRandomWord());
   const [guessedLetters, setGuessedLetters] = useState([]);
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
+  function startNewGame() {
+    setCurrentWord(getRandomWord());
+    setGuessedLetters([]);
+  }
   const wrongGuessCount = guessedLetters.filter(
     (letter) => !currentWord.includes(letter),
   ).length;
@@ -20,7 +24,8 @@ function App() {
     .split("")
     .every((letter) => guessedLetters.includes(letter));
 
-  const isGameLost = wrongGuessCount >= languages.length - 1;
+  const numGuessesLeft = languages.length - 1;
+  const isGameLost = wrongGuessCount >= numGuessesLeft;
 
   const isGameOver = isGameWon || isGameLost;
 
@@ -41,6 +46,7 @@ function App() {
 
   return (
     <main>
+      {isGameWon && <Confetti recycle={false} numberOfPieces={1000} />}
       <Header />
       <GameStatus
         isGameOver={isGameOver}
@@ -51,14 +57,42 @@ function App() {
         wrongGuessCount={wrongGuessCount}
       />
       <LanguageChips wrongGuessCount={wrongGuessCount} />
-      <Word currentWord={currentWord} guessedLetters={guessedLetters} />
+      <Word
+        currentWord={currentWord}
+        guessedLetters={guessedLetters}
+        isGameLost={isGameLost}
+      />
+
+      {/* Combined visually-hidden aria-live region for status updates */}
+      <section className="sr-only" aria-live="polite" role="status">
+        <p>
+          {currentWord.includes(lastGuessedLetter)
+            ? `Correct! The letter ${lastGuessedLetter} is in the word.`
+            : `Sorry, the letter ${lastGuessedLetter} is not in the word.`}
+          You have {numGuessesLeft} attempts left.
+        </p>
+        <p>
+          Current word:{" "}
+          {currentWord
+            .split("")
+            .map((letter) =>
+              guessedLetters.includes(letter) ? letter + "." : "blank.",
+            )
+            .join(" ")}
+        </p>
+      </section>
       <Keyboard
         alphabet={alphabet}
         addGuessedLetter={addGuessedLetter}
         guessedLetters={guessedLetters}
         currentWord={currentWord}
+        isGameOver={isGameOver}
       />
-      {isGameOver && <button className="new-game">New Game</button>}
+      {isGameOver && (
+        <button className="new-game" onClick={startNewGame}>
+          New Game
+        </button>
+      )}
     </main>
   );
 }

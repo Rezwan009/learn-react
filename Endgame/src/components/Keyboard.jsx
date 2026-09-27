@@ -4,6 +4,7 @@ const Keyboard = ({
   addGuessedLetter,
   guessedLetters,
   currentWord,
+  isGameOver,
 }) => {
   const keyboardElements = alphabet.split("").map((letter) => {
     const isGuessed = guessedLetters.includes(letter);
@@ -21,6 +22,9 @@ const Keyboard = ({
         className={className}
         key={letter}
         onClick={() => addGuessedLetter(letter)}
+        disabled={isGameOver}
+        aria-disabled={guessedLetters.includes(letter)}
+        aria-label={`Letter ${letter}`}
       >
         {letter.toUpperCase()}
       </button>
