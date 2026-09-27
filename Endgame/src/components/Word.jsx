@@ -1,7 +1,11 @@
-export const Word = ({ letter }) => {
-const letterElements = letter
-  .split("")
-  .map((char, index) => <span key={index}>{char}</span>);
+export const Word = ({ currentWord, guessedLetters }) => {
+  const letterElements = currentWord
+    .split("")
+    .map((letter, index) => (
+      <span key={index}>
+        {guessedLetters.includes(letter) ? letter.toUpperCase() : ""}
+      </span>
+    ));
 
   return <section className="word">{letterElements}</section>;
 };
